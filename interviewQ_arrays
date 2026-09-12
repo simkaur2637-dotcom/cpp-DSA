@@ -1,0 +1,58 @@
+*********************
+******Beginner*******
+*********************
+
+Q1. What is an array?
+
+A collection of elements of the same type stored in contiguous memory locations.
+
+Q2. What is the first index?
+
+0.
+
+Q3. What is random access?
+
+Accessing an element directly using its index.
+
+Q4. Complexity of accessing arr[i]?
+
+O(1).
+
+Q5. Can an array contain duplicate values?
+
+Yes.
+
+Q6. Can an array contain different data types?
+
+A normal C++ array stores elements of the same type.
+
+****************************
+********Intermediate********
+****************************
+
+Q7. Why is insertion at the beginning O(n)?
+
+Existing elements generally need to be shifted.
+
+Q8. Why is accessing an array O(1)?
+
+Because its contiguous memory layout allows direct address calculation.
+
+Q9. Array vs linked list?
+
+Array provides fast indexed access, while linked lists are better suited to certain insert/delete operations when the relevant node position is already known.
+
+Q10. Array vs vector?
+
+A built-in array has fixed size, while vector is dynamically resizable and provides useful STL operations.
+
+*****************************
+Tricky Interview Questions
+*****************************
+
+Q11. Why shouldn't you always initialize maximum as 0?
+
+Because all elements could be negative.
+Q12. What happens if you access outside the array bounds?
+
+It's undefined behavior in C++.
