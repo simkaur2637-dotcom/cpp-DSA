@@ -1,0 +1,59 @@
+Q1. What is a linked list?
+
+A linear data structure consisting of nodes where each node stores data and a link to another node.
+
+Q2. What is a node?
+
+A node contains data and one or more pointers/links connecting it to other nodes.
+
+Q3. Why is linked-list access O(n)?
+
+Because nodes are not indexed like an array, so we generally have to traverse from the head to reach a particular position.
+
+Q4. What is the head?
+
+A pointer/reference to the first node.
+
+Q5. What does nullptr mean?
+
+It represents a null pointer, meaning it points to no object.
+
+Q6. Why is insertion at the beginning O(1)?
+
+Because we only need to create a node, point it to the current head, and update head.Q9. How do you find the middle?
+
+Slow and fast pointers.
+
+Q10. How do you detect a cycle?
+
+Floyd's slow-fast pointer algorithm.
+
+  //final revision sheet*****
+  LINKED LIST
+│
+├── Node = data + pointer
+│
+├── Head = first node
+│
+├── Last node → nullptr
+│
+├── Access → O(n)
+│
+├── Search → O(n)
+│
+├── Insert beginning → O(1)
+│
+├── Delete beginning → O(1)
+│
+├── Reverse → prev + curr + next
+│
+├── Middle → slow + fast
+│
+├── Cycle → slow + fast
+│
+├── Nth from end → two pointers
+│
+└── Merge sorted lists → two pointers
+  
+
+  
