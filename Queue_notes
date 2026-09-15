@@ -1,0 +1,655 @@
+. What is a Queue?
+
+A Queue is a linear data structure in which insertion and deletion take place at different ends.
+
+It follows the principle:
+
+FIFO — First In, First Out
+
+The element that is inserted first is removed first.
+
+Example
+Front                         Rear
+  ↓                            ↓
+[10] → [20] → [30] → [40]
+10 entered first.
+Therefore, 10 will leave first.
+New elements are added from the rear.
+Elements are removed from the front.
+2. FIFO Principle
+
+FIFO stands for:
+
+First In, First Out
+
+Example:
+
+Enqueue: 10 → 20 → 30 → 40
+
+Dequeue order:
+
+10 → 20 → 30 → 40
+
+The first element inserted is the first one removed.
+
+Real-life example
+
+Imagine students standing in a line for a ticket:
+
+Student A → Student B → Student C → Student D
+
+Student A came first, so A gets served first.
+
+This is exactly how a Queue works.
+
+3. Important Terminology
+
+A Queue has two important ends:
+
+Front
+
+The front points to the element that will be removed next.
+
+Rear
+
+The rear points to the position where a new element is inserted.
+
+             Queue
+
+Front                           Rear
+ ↓                               ↓
+[10] → [20] → [30] → [40]
+
+Remember:
+
+Insertion → Rear
+Deletion → Front
+
+4. Basic Operations of Queue
+
+There are five important operations.
+
+4.1 Enqueue
+
+Enqueue means inserting an element into the queue.
+
+Before:
+
+[10] → [20] → [30]
+
+Enqueue 40
+
+After:
+
+[10] → [20] → [30] → [40]
+
+Insertion takes place at the rear.
+
+4.2 Dequeue
+
+Dequeue means removing an element from the queue.
+
+Before:
+
+[10] → [20] → [30]
+ ↑
+Front
+
+After Dequeue:
+
+[20] → [30]
+ ↑
+Front
+
+The element at the front is removed.
+
+4.3 Peek / Front
+
+Returns the front element without removing it.
+
+Example:
+
+[10] → [20] → [30]
+ ↑
+Front
+
+Peek gives:
+
+10
+
+but 10 remains in the queue.
+
+4.4 Rear / Back
+
+Returns the last element of the queue without removing it.
+
+[10] → [20] → [30]
+              ↑
+             Rear
+
+Back gives:
+
+30
+4.5 IsEmpty
+
+Checks whether the queue contains any elements.
+
+A queue can be:
+
+Empty
+
+or
+
+Non-empty
+5. Queue Overflow
+
+Overflow occurs when we try to insert an element into a queue that has reached its maximum capacity.
+
+Example:
+
+Queue size = 5
+
+[10][20][30][40][50]
+
+The queue is full.
+
+Trying to insert:
+
+60
+
+causes overflow in a fixed-size implementation.
+
+Remember
+
+Insertion into a full queue → Overflow
+
+6. Queue Underflow
+
+Underflow occurs when we try to remove an element from an empty queue.
+
+Queue:
+
+[ ]
+
+Trying to perform:
+
+Dequeue
+
+causes underflow.
+
+Remember
+
+Deletion from an empty queue → Underflow
+
+7. Queue Representation
+
+A Queue can be implemented using different data structures.
+
+The major approaches are:
+
+Queue
+│
+├── Array
+│
+├── Linked List
+│
+├── Circular Queue
+│
+├── Deque
+│
+└── Priority Queue
+8. Queue Using Array — Theory
+
+In an array implementation, elements are stored in contiguous memory locations.
+
+Example:
+
+Index:   0    1    2    3
+        ┌────┬────┬────┬────┐
+        │ 10 │ 20 │ 30 │ 40 │
+        └────┴────┴────┴────┘
+         ↑              ↑
+       Front           Rear
+
+Two variables are generally maintained:
+
+front
+rear
+Advantages
+Simple implementation
+Easy access
+Enqueue and dequeue can be O(1) with proper indexing
+Disadvantages
+Fixed-size array has limited capacity.
+May result in unused spaces.
+A simple linear array queue can suffer from false overflow.
+
+This leads to the need for a Circular Queue.
+
+9. False Overflow
+
+This is a very important Queue concept.
+
+Suppose capacity = 5.
+
+Initially:
+
+[10][20][30][40][50]
+ ↑                 ↑
+Front             Rear
+
+Now remove three elements:
+
+[ ][ ][ ][40][50]
+          ↑    ↑
+        Front Rear
+
+There are empty spaces at the beginning.
+
+However, if the rear has reached the last position, a simple array implementation may report:
+
+Queue Full
+
+even though there are unused positions.
+
+This is called false overflow.
+
+Solution
+
+Use a:
+
+Circular Queue
+
+10. Queue Using Linked List — Theory
+
+A linked-list queue uses nodes instead of a fixed-size array.
+
+Each node contains:
+
+Data + Next pointer
+
+Example:
+
+Front                         Rear
+ ↓                              ↓
+[10|•] → [20|•] → [30|null]
+
+Usually two pointers are maintained:
+
+Front → first node
+Rear  → last node
+Enqueue
+
+A new node is added at the rear.
+
+Dequeue
+
+The node at the front is removed.
+
+Major advantage
+
+Unlike a fixed-size array, a linked-list queue can dynamically grow as memory is available.
+
+11. Array Queue vs Linked List Queue
+Feature	Array Queue	Linked List Queue
+Memory	Contiguous	Non-contiguous
+Size	Usually fixed	Dynamic
+Memory overhead	Lower	Extra pointer required
+Enqueue	O(1)*	O(1)
+Dequeue	O(1)*	O(1)
+Cache locality	Better	Usually poorer
+False overflow	Possible in simple implementation	Not applicable in same way
+
+* assumes an appropriate implementation such as maintaining front/rear indices.
+
+12. Circular Queue
+
+A Circular Queue is a queue in which the last position is logically connected to the first position.
+
+Instead of:
+
+0 → 1 → 2 → 3 → 4 → STOP
+
+we get:
+
+0 → 1 → 2 → 3 → 4
+↑               ↓
+└───────────────┘
+
+This allows the queue to reuse previously freed positions.
+
+Main purpose
+
+To efficiently utilize available space in an array-based queue.
+
+13. Circular Queue Working
+
+Suppose capacity = 5.
+
+Index:
+
+0   1   2   3   4
+
+After reaching index 4, the next position can be:
+
+0
+
+This is achieved conceptually using:
+
+(next index) = (current index + 1) % size
+
+For example:
+
+(4 + 1) % 5 = 0
+
+Therefore:
+
+4 → 0
+14. Queue vs Circular Queue
+Simple Queue	Circular Queue
+Linear arrangement	Circular arrangement
+Freed beginning positions may not be reused efficiently	Freed positions can be reused
+Can suffer from false overflow	Avoids this issue
+Simpler	Slightly more complex
+Suitable for simple situations	Better for fixed-size buffers
+15. Deque
+
+Deque stands for:
+
+Double Ended Queue
+
+It allows insertion and deletion from both ends.
+
+        Insert/Delete
+        ↓          ↓
+      Front       Rear
+        ↓          ↓
+      [10][20][30][40]
+        ↑          ↑
+        └──────────┘
+
+Operations can happen at:
+
+Front
+Rear
+Difference from normal Queue
+
+Normal Queue:
+
+Insertion → Rear
+Deletion  → Front
+
+Deque:
+
+Insertion → Front or Rear
+Deletion  → Front or Rear
+16. Types of Deque
+
+There are two commonly discussed restricted forms.
+
+Input Restricted Deque
+
+Insertion is allowed at only one end, but deletion can happen at both ends.
+
+Output Restricted Deque
+
+Deletion is allowed at only one end, but insertion can happen at both ends.
+
+17. Priority Queue
+
+A Priority Queue is different from a normal FIFO queue.
+
+In a normal Queue:
+
+The oldest element gets processed first.
+
+In a Priority Queue:
+
+The element with the highest or lowest priority is processed first, depending on the type.
+
+Example:
+
+Elements:
+
+5
+10
+2
+8
+
+In a max-priority queue, the largest value has the highest priority:
+
+10 → 8 → 5 → 2
+
+So it does not simply follow FIFO.
+
+18. Priority Queue and Heap
+
+Priority Queues are commonly implemented using a:
+
+Heap
+
+The two common forms are:
+
+Max Heap
+
+Largest element has highest priority.
+
+10
+
+comes before smaller values.
+
+Min Heap
+
+Smallest element has highest priority.
+
+2
+
+comes before larger values.
+
+We'll study heaps separately later.
+
+19. Normal Queue vs Priority Queue
+Normal Queue	Priority Queue
+FIFO	Priority-based
+First element gets removed first	Highest/lowest priority gets removed first
+Order depends on arrival	Order depends on priority
+Used in simple scheduling	Used in priority-based scheduling
+Usually O(1) basic end operations	Heap-based insertion/removal generally O(log n)
+20. Queue vs Stack
+
+One of the most frequently asked interview questions.
+
+Queue	Stack
+FIFO	LIFO
+First In First Out	Last In First Out
+Insertion at rear	Insertion at top
+Deletion at front	Deletion at top
+Example: waiting line	Example: stack of plates
+Easy memory trick
+
+Queue = line of people
+
+First person → First served
+
+Stack = plates
+
+Last plate placed → First plate removed
+21. Applications of Queue
+
+Queues are extremely important because they appear in many algorithms and systems.
+
+1. CPU Scheduling
+
+Processes can wait in a queue for CPU resources.
+
+2. Printer Scheduling
+
+Print jobs can be processed in order.
+
+3. Keyboard/Input Buffers
+
+Input can be temporarily stored and processed in order.
+
+4. Network Data
+
+Packets may wait in buffers before processing/transmission.
+
+5. Breadth-First Search
+
+BFS uses a queue to process nodes level by level.
+
+6. Level Order Traversal
+
+Trees can be traversed level by level using a queue.
+
+7. Resource Scheduling
+
+Requests can wait for available resources.
+
+8. Simulation Problems
+
+Queues are useful for simulating:
+
+Customers
+Vehicles
+Requests
+Processes
+Tasks
+22. Queue in BFS
+
+This is one of the most important connections you'll make later.
+
+Suppose:
+
+        1
+       / \
+      2   3
+     / \
+    4   5
+
+BFS visits:
+
+1 → 2 → 3 → 4 → 5
+
+Why Queue?
+
+Because we want to process nodes in the same order in which they were discovered.
+
+Conceptually:
+
+Visit 1
+ ↓
+Put 2,3 into Queue
+ ↓
+Process 2
+ ↓
+Process 3
+ ↓
+Process 4,5
+
+Therefore:
+
+BFS → Queue
+
+This is something you should memorize.
+
+23. Queue and Sliding Window
+
+Queue concepts also appear in sliding-window problems.
+
+For example, suppose we care only about elements within a particular time range.
+
+Older elements can be removed from the front when they leave the window.
+
+This idea appears in:
+
+LeetCode 933 — Number of Recent Calls
+
+More advanced sliding-window problems often use a Deque.
+
+24. Monotonic Queue
+
+A Monotonic Queue is an advanced queue technique.
+
+It maintains elements in a particular order, such as:
+
+Decreasing:
+[10, 8, 5, 3]
+
+or:
+
+Increasing:
+[2, 4, 7, 9]
+
+It is commonly implemented using a Deque.
+
+Important application
+
+Sliding Window Maximum
+
+LeetCode:
+
+239 — Sliding Window Maximum
+
+This is an advanced DSA pattern.
+
+25. Queue Complexity
+
+For a properly implemented standard Queue:
+
+Operation	Complexity
+Enqueue	O(1)
+Dequeue	O(1)
+Front/Peek	O(1)
+Rear/Back	O(1)
+IsEmpty	O(1)
+Size	O(1)
+
+Space complexity:
+
+O(n)
+
+where n is the number of elements.
+
+26. Why Queue Operations Can Become O(n)
+
+A poorly designed array queue might shift every element after deletion:
+
+[10][20][30][40]
+
+Remove 10:
+
+[20][30][40]
+
+If every element is shifted, deletion takes:
+
+O(n)
+
+A better implementation moves the front index/pointer instead of shifting elements, making deletion:
+
+O(1)
+
+This is an important implementation detail.
+
+27. Queue ADT
+
+Queue can also be understood as an Abstract Data Type (ADT).
+
+The ADT describes what operations are available, rather than exactly how they are implemented.
+
+A Queue ADT supports operations such as:
+
+Enqueue
+Dequeue
+Peek/Front
+Rear/Back
+IsEmpty
+Size
+
+It can then be implemented using:
+
+Array
+Linked List
+Deque
+
+and other structures.
