@@ -1,0 +1,491 @@
+1. Why is Queue called FIFO? Can you give a situation where FIFO is not appropriate?
+
+Expected answer:
+A queue follows First In, First Out, meaning the element that enters first is removed first.
+
+FIFO is appropriate when fairness/order matters, such as printer jobs or people waiting in line.
+
+It is not appropriate when elements have different priorities. In that situation, a Priority Queue
+is more suitable.
+
+  2. Why can't we simply use an array and remove the first element using shifting?
+
+Suppose:[10, 20, 30, 40, 50]
+  If we remove 10 and shift everything:
+[20, 30, 40, 50]
+  Every remaining element has to move one position.
+
+Therefore:
+
+Dequeue = O(n)
+
+A proper queue implementation maintains a front pointer/index so that deletion can be:
+
+O(1)
+
+ 3. What is the difference between Queue and Deque?
+
+Queue:
+
+Insert → Rear
+Delete → Front
+
+Deque:
+
+Insert → Front or Rear
+Delete → Front or Rear
+
+Deque = Double Ended Queue.
+
+4. Why is a linked-list queue usually implemented using both front and rear?
+
+If we only have front, reaching the end requires traversal:
+
+O(n)
+
+With both:
+
+front → first node
+rear  → last node
+
+we can insert directly at the rear:
+
+O(1)
+
+  5. What happens if front and rear point to the same node?
+
+It generally means the queue contains one element.
+
+front
+  ↓
+[10]
+  ↑
+rear
+
+After removing it:
+
+front = nullptr
+rear = nullptr
+
+The queue becomes empty.
+
+  6. Implement a Queue using a Linked List.
+
+You should be able to write:
+
+class Node {
+public:
+    int data;
+    Node* next;
+
+    Node(int value) {
+        data = value;
+        next = nullptr;
+    }
+};
+
+Then maintain:
+
+Node* front;
+Node* rear;
+
+Insertion:
+
+rear->next = newNode;
+rear = newNode;
+
+Deletion:
+
+Node* temp = front;
+front = front->next;
+delete temp;
+7. What is the time complexity of Queue operations using a linked list?
+Operation	Complexity
+Enqueue	O(1)
+Dequeue	O(1)
+Front	O(1)
+Rear	O(1)
+Search	O(n)
+
+Space:
+
+O(n)
+8. How would you implement a Queue using two Stacks?
+
+This is a very common interview question.
+
+You maintain:
+
+Stack 1
+Stack 2
+
+For enqueue:
+
+push into stack1
+
+For dequeue:
+
+If stack2 is empty:
+    move everything from stack1 → stack2
+
+pop from stack2
+
+This is essentially what you'll encounter in LeetCode 232 — Implement Queue using Stacks.
+
+9. Why does Queue using two Stacks still achieve amortized O(1) dequeue?
+
+This is a more advanced question.
+
+Although transferring elements from stack1 to stack2 takes:
+
+O(n)
+
+each element is transferred only once before being popped.
+
+Therefore, over many operations, the average cost per operation is:
+
+Amortized O(1)
+
+This is an important interview concept.
+
+10. Can Queue be implemented using one Stack?
+
+Technically yes, but dequeue becomes expensive because recursion or another mechanism is needed to reach the oldest element.
+
+A common approach makes one operation O(n).
+
+So two stacks are preferred for an efficient queue implementation.
+
+🔄 LEVEL 3 — Circular Queue
+
+These are particularly important.
+
+11. What problem does a simple array Queue have?
+
+Suppose:
+
+Size = 5
+
+Initially:
+
+[10][20][30][40][50]
+ ↑                ↑
+front            rear
+
+Remove three elements:
+
+[ ][ ][ ][40][50]
+          ↑    ↑
+        front rear
+
+There is free space at the beginning, but rear has reached the end.
+
+This causes false overflow.
+
+A Circular Queue solves this by reusing those spaces.
+
+12. How does a Circular Queue reuse space?
+
+Instead of letting rear stop at the last index, we wrap it around:
+
+rear = (rear + 1) % size;
+
+For example:
+
+rear = 4
+size = 5
+
+Then:
+
+(4 + 1) % 5 = 0
+
+So rear moves back to index 0.
+
+13. How do you determine whether a Circular Queue is full?
+
+One common implementation uses:
+
+(rear + 1) % size == front
+
+This means the next position of rear is already occupied by front.
+
+Another implementation maintains a separate count.
+
+You should know both approaches.
+
+14. How do you determine whether a Circular Queue is empty?
+
+Depending on implementation:
+
+front == -1
+
+or, when using a count:
+
+count == 0
+15. Why is modulo % used in Circular Queue?
+
+Because it allows an index to wrap around.
+
+Example:
+
+size = 5
+0 → 1 → 2 → 3 → 4 → 0 → 1 → ...
+
+Formula:
+
+(index + 1) % size
+
+This creates the circular behavior.
+
+🚀 LEVEL 4 — Problem-Solving Questions
+
+These are where interviews become interesting.
+
+16. How would you reverse a Queue?
+
+Example:
+
+Before:
+
+10 20 30 40
+
+After:
+
+40 30 20 10
+
+A common approach:
+
+Queue + Stack
+
+Move elements from Queue → Stack, then Stack → Queue.
+
+17. How would you reverse the first K elements of a Queue?
+
+Example:
+
+Queue:
+1 2 3 4 5
+
+K = 3
+
+Output:
+
+3 2 1 4 5
+
+Typical approach:
+
+Queue + Stack
+
+Steps:
+
+Remove first K elements.
+Push them into stack.
+Put them back into queue.
+Rotate remaining elements to preserve order.
+
+This is a very good medium-level queue problem.
+
+18. How do you generate binary numbers from 1 to N using a Queue?
+
+For:
+
+N = 5
+
+Output:
+
+1
+10
+11
+100
+101
+
+Queue-based idea:
+
+Start:
+"1"
+
+Take "1"
+Generate:
+"10"
+"11"
+
+Take "10"
+Generate:
+"100"
+"101"
+
+This tests whether you understand how a queue can generate data level-by-level.
+
+19. How can a Queue be used to find the first non-repeating character in a stream?
+
+Suppose characters arrive:
+
+a a b c
+
+You need to track which character is currently the first non-repeating one.
+
+Typical tools:
+
+Queue + frequency array/map
+
+This tests Queue + Hashing together.
+
+20. How can Queue be used to implement BFS?
+
+This is one of the most important questions.
+
+For a graph:
+
+        1
+       / \
+      2   3
+     / \
+    4   5
+
+BFS visits:
+
+1 → 2 → 3 → 4 → 5
+
+We use:
+
+queue<int> q;
+
+because nodes are processed in the order they were discovered.
+
+This becomes extremely important when we reach Trees and Graphs.
+
+🧩 LEVEL 5 — Advanced Data Structure Questions
+21. What is a Monotonic Queue?
+
+A Monotonic Queue maintains elements in increasing or decreasing order.
+
+For example:
+
+Decreasing:
+
+[9, 7, 5, 3]
+
+It is commonly implemented using a deque.
+
+One of its most important applications is:
+
+Sliding Window Maximum
+
+LeetCode:
+
+239 — Sliding Window Maximum
+
+This is an important medium/hard DSA pattern.
+
+22. Why do we use a Deque instead of a normal Queue for Sliding Window Maximum?
+
+Because we need to:
+
+remove elements from the front
+remove smaller elements from the rear
+insert new elements at the rear
+
+A normal Queue doesn't allow efficient operations at both ends.
+
+A Deque does.
+
+23. What is the difference between Queue and Priority Queue?
+
+Normal Queue:
+
+FIFO
+
+Priority Queue:
+
+Highest/lowest priority comes first
+
+Example:
+
+Elements:
+5, 1, 10, 3
+
+A max-priority queue gives:
+
+10 → 5 → 3 → 1
+
+It does not follow normal FIFO.
+
+24. What data structure is generally used to implement a Priority Queue efficiently?
+
+A:
+
+Heap
+
+Usually:
+
+Binary Heap
+
+In C++:
+
+priority_queue<int> pq;
+25. What is the complexity of operations in a Priority Queue?
+
+For a binary heap:
+
+Operation	Complexity
+Insert	O(log n)
+Delete top	O(log n)
+Top	O(1)
+Build heap	O(n)
+🧠 LEVEL 6 — Tricky Interview Questions
+26. Can Queue have multiple front elements?
+
+No.
+
+A queue has one logical front and one logical rear.
+
+27. Is Queue always implemented using an array?
+
+No.
+
+It can be implemented using:
+
+Array
+Linked List
+Two Stacks
+Deque
+
+and other specialized structures.
+
+28. Why is q.pop() in C++ not returning the removed element?
+
+This is a classic C++ STL question.
+
+In:
+
+q.pop();
+
+the element is removed but not returned.
+
+If you need it:
+
+int x = q.front();
+q.pop();
+
+This is because the STL separates accessing and removing the element.
+
+29. What happens if you call front() on an empty STL queue?
+
+This is invalid behavior; you should check:
+
+if (!q.empty()) {
+    cout << q.front();
+}
+
+before accessing it.
+
+30. Why is std::queue called a container adaptor?
+
+Because std::queue isn't a completely independent container implementation.
+
+It provides a queue interface over an underlying container such as:
+
+deque
+
+By default, C++ std::queue uses std::deque underneath.
+
